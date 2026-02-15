@@ -100,12 +100,13 @@ app.post('/api/strategy', authenticateToken, async (req, res) => {
 if (process.env.NODE_ENV === 'production' || true) { // Defaulting to serve if available
   app.use(express.static(path.join(__dirname, '../dist')));
   
-  app.get('*', (req, res) => {
+  app.use((req, res) => {
   if (req.url.startsWith('/api')) {
     return res.status(404).json({ message: 'API Route Not Found' });
   }
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
+
 }
 
 // Start Server
